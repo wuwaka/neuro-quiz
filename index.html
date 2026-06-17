@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>神经系统的发生 - 测验</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'Segoe UI','Microsoft YaHei',sans-serif;background:#f0f2f5;color:#333;-webkit-tap-highlight-color:transparent}
+
+/* Header */
+.hdr{background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;padding:12px 16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.hdr h1{font-size:clamp(14px,3.5vw,18px);margin-bottom:6px}
+.sbar{display:flex;gap:6px;font-size:clamp(11px,2.5vw,13px);flex-wrap:wrap}
+.sbar span{background:rgba(255,255,255,.15);padding:3px 8px;border-radius:12px;white-space:nowrap}
+.sbar .ok{background:rgba(76,175,80,.3)}
+.sbar .ng{background:rgba(244,67,54,.3)}
+
+/* Progress */
+.pw{background:#e0e0e0;height:3px;position:sticky;top:0;z-index:99}
+.pb{height:100%;background:linear-gradient(90deg,#4caf50,#2196f3);transition:width .3s;width:0}
+
+/* Container */
+.ct{max-width:860px;margin:0 auto;padding:12px}
+
+/* Sticky nav kit */
+.nk{position:sticky;top:63px;z-index:90;background:#f0f2f5;border-bottom:1px solid #e0e0e0;padding:8px 12px;margin:0 -12px}
+.fb{display:flex;gap:6px;justify-content:center;margin:0 0 8px;flex-wrap:wrap}
+.fb button{padding:5px 12px;border-radius:14px;border:1.5px solid #ddd;background:#fff;font-size:12px;cursor:pointer;min-height:30px;touch-action:manipulation}
+.fb button.on{background:#2196f3;color:#fff;border-color:#2196f3}
+.dg{display:flex;gap:4px;justify-content:center;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:2px 0 4px;scrollbar-width:none}
+.dg::-webkit-scrollbar{display:none}
+.dt{width:26px;height:26px;min-width:26px;border-radius:50%;border:2px solid #ddd;display:flex;align-items:center;justify-content:center;font-size:10px;cursor:pointer;font-weight:700;touch-action:manipulation;flex-shrink:0}
+.dt:hover{border-color:#2196f3}
+.dt.ok{border-color:#4caf50;background:#4caf50;color:#fff}
+.dt.ng{border-color:#f44336;background:#f44336;color:#fff}
+.dt.sk{border-color:#ff9800;background:#fff3e0;color:#e65100}
+
+/* Question card */
+.qc{background:#fff;border-radius:10px;padding:16px;margin-bottom:10px;box-shadow:0 1px 6px rgba(0,0,0,.06);transition:all .3s;border-left:4px solid transparent}
+.qc.act{border-left-color:#2196f3}
+.qc.ok{border-left-color:#4caf50;background:#f8fdf8}
+.qc.ng{border-left-color:#f44336;background:#fef8f8}
+.qn{font-size:12px;color:#888;margin-bottom:6px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.tg{background:#e3f2fd;color:#1976d2;padding:2px 8px;border-radius:8px;font-size:11px}
+.tg.cl{background:#fff3e0;color:#e65100}
+.qt{font-size:clamp(14px,3.2vw,16px);line-height:1.7;margin-bottom:14px;font-weight:500}
+
+/* Options */
+.opts{display:flex;flex-direction:column;gap:8px}
+.op{display:flex;align-items:flex-start;gap:10px;padding:12px;border:2px solid #e8e8e8;border-radius:10px;cursor:pointer;transition:all .2s;min-height:44px;touch-action:manipulation}
+.op:hover:not(.dis){border-color:#90caf9;background:#f5f9ff}
+.op:active:not(.dis){transform:scale(.98)}
+.op.sel{border-color:#2196f3;background:#e3f2fd}
+.op.ok{border-color:#4caf50;background:#e8f5e9}
+.op.ng{border-color:#f44336;background:#ffebee}
+.op.dis{cursor:default;opacity:.85}
+.op .lt{width:28px;height:28px;border-radius:50%;background:#e0e0e0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;transition:all .2s}
+.op.sel .lt{background:#2196f3;color:#fff}
+.op.ok .lt{background:#4caf50;color:#fff}
+.op.ng .lt{background:#f44336;color:#fff}
+.op .tx{line-height:1.6;padding-top:2px;font-size:clamp(13px,3vw,15px)}
+
+/* Explanation */
+.ex{margin-top:14px;padding:14px;background:#f8f9fa;border-radius:8px;border-left:3px solid #4caf50;display:none;font-size:clamp(12px,2.8vw,14px);line-height:1.8}
+.ex.show{display:block}
+.ex b{color:#2e7d32}
+
+/* Navigation */
+.nv{display:flex;justify-content:center;gap:8px;margin:20px 0;flex-wrap:wrap;padding:0 4px}
+.nv button{padding:10px 16px;border:none;border-radius:8px;font-size:13px;cursor:pointer;font-weight:600;touch-action:manipulation;min-height:40px}
+.bp{background:#2196f3;color:#fff}.bp:active{background:#1976d2}
+.bd{background:#f44336;color:#fff}.bd:active{background:#d32f2f}
+.bs{background:#4caf50;color:#fff}.bs:active{background:#388e3c}
+.bo{background:#fff;color:#333;border:2px solid #ddd}.bo:active{background:#f0f0f0}
+
+/* Modal */
+.mo{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);display:none;z-index:200;justify-content:center;align-items:center;padding:16px}
+.mo.show{display:flex}
+.mm{background:#fff;border-radius:14px;padding:24px;max-width:460px;width:100%;text-align:center;max-height:90vh;overflow-y:auto}
+.mm h2{margin-bottom:10px;font-size:20px}
+.mm .sb{font-size:clamp(40px,12vw,56px);font-weight:800;color:#2196f3;margin:10px 0}
+.mm .sb.good{color:#4caf50}.mm .sb.bad{color:#f44336}
+.mm p{font-size:14px;line-height:1.7;color:#666;margin-bottom:6px}
+.mm .dg2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:14px 0}
+.mm .di{text-align:center;padding:10px 6px;background:#f5f5f5;border-radius:8px}
+.mm .di .dn{font-size:22px;font-weight:700}
+.mm .di .dl{font-size:11px;color:#888;margin-top:2px}
+
+/* Wrong answer list in modal */
+.wl{text-align:left;margin-top:14px;max-height:200px;overflow-y:auto;padding:10px;background:#f5f5f5;border-radius:8px;font-size:12px;line-height:1.6}
+.wl b{display:block;margin-bottom:6px}
+.wi{margin:6px 0;padding:6px;border-bottom:1px solid #e0e0e0}
+
+/* Scroll to top button */
+.stt{position:fixed;bottom:20px;right:20px;width:44px;height:44px;border-radius:50%;background:#2196f3;color:#fff;border:none;font-size:20px;cursor:pointer;display:none;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.3);align-items:center;justify-content:center;touch-action:manipulation}
+.stt.show{display:flex}
+
+/* Desktop tweaks */
+@media(min-width:768px){
+  .ct{padding:20px}
+  .qc{padding:24px}
+  .nv button{padding:10px 24px}
+  .nk{margin:0 -20px;padding:10px 16px}
+  .dg{justify-content:center;flex-wrap:wrap;overflow-x:visible}
+  .dt{width:28px;height:28px;min-width:28px;font-size:11px}
+}
+</style>
+</head>
+<body>
+<div class="hdr">
+<h1>🧠 神经系统的发生 — 测验</h1>
+<div class="sbar">
+<span id="sN">已答 0/56</span>
+<span class="ok" id="sC">✓ 0</span>
+<span class="ng" id="sW">✗ 0</span>
+<span id="sA">正确率 --</span>
+</div>
+</div>
+<div class="pw"><div class="pb" id="pb"></div></div>
+<div class="ct">
+<div class="nk">
+<div class="fb" id="fb">
+<button class="on" data-f="all">全部</button>
+<button data-f="un">未答</button>
+<button data-f="wr">答错</button>
+<button data-f="ri">答对</button>
+</div>
+<div class="dg" id="dg"></div>
+</div>
+<div id="qc"></div>
+<div class="nv">
+<button class="bo" onclick="go(0)">⏮ 首</button>
+<button class="bp" onclick="go(cur-1)">◀ 上一题</button>
+<button class="bp" onclick="go(cur+1)">下一题 ▶</button>
+<button class="bo" onclick="go(55)">末 ⏭</button>
+<button class="bs" onclick="showRes()">📊 统计</button>
+<button class="bd" onclick="resetAll()">🔄 重置</button>
+</div>
+</div>
+<div class="mo" id="mov" onclick="if(event.target===this)closeM()">
+<div class="mm" id="mom"></div>
+</div>
+<button class="stt" id="stt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+var Q=[
+{q:"关于神经板的形成，以下哪项描述最准确？",o:["神经板由中胚层细胞增殖形成","脊索诱导其背侧的外胚层中线增厚形成神经板","神经板由内胚层内陷折叠而成","神经板是表面外胚层自行增殖的结果"],a:1,e:"神经板由脊索（notochord）诱导其背侧的外胚层中线增厚形成，由单层柱状上皮构成，称为神经上皮。",t:"知识"},
+{q:"神经管闭合的起始部位和推进方向分别是？",o:["从前神经孔开始，向尾端单向推进","从后神经孔开始，向头端单向推进","从中段（第4~6体节水平）开始，向头端和尾端双向推进","从头端和尾端同时开始，向中段推进"],a:2,e:"神经褶从中段（第4~6体节水平）开始融合，向头端和尾端两个方向推进。",t:"知识"},
+{q:"关于前神经孔和后神经孔的闭合时间，以下哪项正确？",o:["前神经孔第22天闭合，后神经孔第25天闭合","前神经孔第25天闭合，后神经孔第27天闭合","前神经孔第27天闭合，后神经孔第30天闭合","两者均在第22天同时闭合"],a:1,e:"前神经孔约第25天闭合，后神经孔约第27天闭合。前孔未闭→无脑畸形，后孔未闭→脊柱裂。",t:"知识"},
+{q:"神经管闭合过程中，MHP（中线弯曲点）的形成机制是？",o:["神经褶外侧细胞的快速增殖导致弯曲","表面外胚层的牵拉力使神经板弯曲","脊索诱导神经板中线细胞发生楔形改变","体节细胞的迁移挤压神经板中线"],a:2,e:"MHP由脊索诱导，使神经板中线细胞发生楔形改变（细胞顶端变窄），导致神经板向腹侧弯曲。",t:"知识"},
+{q:"神经管壁的组织学结构中，外界膜和内界膜分别位于？",o:["外界膜朝向管腔面，内界膜朝向软膜面","外界膜朝向软膜面（基底面），内界膜朝向管腔面（顶端面）","两者均位于神经管壁的中间层","外界膜是室管膜层的一部分，内界膜是边缘层的一部分"],a:1,e:"外界膜位于基底面（朝向软膜），内界膜位于顶端面（朝向管腔）。",t:"知识"},
+{q:"神经嵴细胞起源于胚胎的哪个位置？",o:["脊索与内胚层之间","神经板与表面外胚层之间","体节与侧板中胚层之间","神经管管腔与室管膜层之间"],a:1,e:"神经嵴细胞起源于神经板边缘，位于神经板与表面外胚层之间，兼具外胚层和中胚层特性。",t:"知识"},
+{q:"以下哪种细胞不属于神经嵴细胞的分化后代？",o:["施万细胞（Schwann cell）","肾上腺髓质嗜铬细胞","少突胶质细胞（oligodendrocyte）","黑素细胞（melanocyte）"],a:2,e:"少突胶质细胞来源于神经管壁的成神经胶质细胞（CNS），不属于神经嵴后代。",t:"知识"},
+{q:"神经嵴头段部分细胞被称为中外胚层（ectomesenchyme）的原因是？",o:["这些细胞同时表达外胚层和内胚层的标志物","这些细胞具有分化为间充质细胞的能力，兼具外胚层和中胚层特性","这些细胞位于外胚层和中胚层的交界处","这些细胞是由外胚层和中胚层融合而成"],a:1,e:"神经嵴头段细胞可分化为间充质（形成头面部骨、软骨），起源于外胚层却有中胚层分化能力。",t:"知识"},
+{q:"关于感觉神经节的发育，成神经细胞的分化路径是？",o:["成神经细胞→多极神经元→假单极神经元","成神经细胞→双极神经元→假单极神经元","成神经细胞→单极神经元→双极神经元","成神经细胞→假单极神经元→双极神经元"],a:1,e:"感觉神经节来源于神经嵴。成神经细胞→双极神经元→假单极神经元（感觉神经元）。",t:"知识"},
+{q:"交感神经节来源于哪个部位的神经嵴细胞？",o:["头部的神经嵴细胞","颈段的神经嵴细胞","胸段的神经嵴细胞","腰骶段的神经嵴细胞"],a:2,e:"交感神经节来源于胸段的神经嵴细胞，迁移至背主动脉背外侧后分化为多极神经元。",t:"知识"},
+{q:"神经管壁分化后的三层结构中，套层将来发育为？",o:["白质","灰质","室管膜","脊膜"],a:1,e:"室管膜层→室管膜；套层→灰质；边缘层→白质。神经管周围间充质→脊膜。",t:"知识"},
+{q:"成神经细胞（neuroblast）的形态演变顺序是？",o:["单极→双极→多极→无极","多极→双极→单极→无极","无极→双极→单极→多极","无极→单极→双极→多极"],a:2,e:"无极（无突起）→双极（原始树突+轴突）→单极→多极（成熟多极神经元）。",t:"知识"},
+{q:"关于成神经细胞的增殖特性，以下哪项正确？",o:["成神经细胞在分化后仍保持旺盛的分裂能力","成神经细胞一旦完成分化，一般不再分裂增殖","成神经细胞在胚胎期不分裂，出生后才开始增殖","成神经细胞的增殖贯穿整个生命期"],a:1,e:"成神经细胞一旦分化完成，一般不再分裂增殖。且最初生成数目远多于最终留存。",t:"知识"},
+{q:"成神经胶质细胞分化谱系中，原浆性星形胶质细胞主要分布在？",o:["白质中","灰质中","脑室室管膜层","脊膜中"],a:1,e:"原浆性星形胶质细胞主要在灰质中；纤维性星形胶质细胞主要在白质中。",t:"知识"},
+{q:"关于神经胶质细胞与成神经细胞的关键区别，以下哪项正确？",o:["神经胶质细胞在分化后失去分裂能力","神经胶质细胞始终保持分裂增殖能力，成神经细胞分化后不再分裂","两者在分化后都不再分裂","两者在分化后都保持分裂增殖能力"],a:1,e:"神经胶质细胞始终保持分裂增殖能力，成神经细胞分化后不再分裂。",t:"知识"},
+{q:"神经管壁的三层结构中，边缘层主要由什么构成？",o:["原位保留的神经上皮细胞","成神经细胞和成胶质细胞","成神经细胞伸向周围的突起（轴突和树突）","间充质细胞分化形成的结缔组织"],a:2,e:"边缘层是最外层，由成神经细胞突起构成，逐渐增厚形成白质。",t:"知识"},
+{q:"脊髓发育中，基板（basal plate）和翼板（alar plate）的对应关系是？",o:["基板→后角（感觉区），翼板→前角（运动区）","基板→前角（运动区），翼板→后角（感觉区）","基板→侧角，翼板→前角和后角","基板和翼板均发育为前角"],a:1,e:"基板（腹侧）→前角（运动区）；翼板（背侧）→后角（感觉区）。界沟分隔两者。",t:"知识"},
+{q:"成人脊髓下端平对的椎体水平是？",o:["T12","L1","L3","S1"],a:1,e:"成人脊髓下端与L1平齐。出生时与L3平齐。腰穿应在L1以下。",t:"知识"},
+{q:"出生时脊髓下端平对的椎体水平是？",o:["T12","L1","L3","L5"],a:2,e:"出生时脊髓下端与L3平齐，以终丝与尾骨相连。成人后上移至L1。",t:"知识"},
+{q:"脊髓白质的形成机制是？",o:["室管膜层细胞向外迁移形成","套层细胞向外迁移形成","边缘层因神经元突起伸入和胶质细胞增殖而增厚形成","周围间充质直接分化形成"],a:2,e:"白质由边缘层增厚形成：神经元突起+胶质细胞增殖→边缘层增厚→白质。",t:"知识"},
+{q:"脊髓灰质中，侧角含有的主要神经元类型是？",o:["躯体运动神经元","中间神经元","内脏运动神经元","感觉传入神经元"],a:2,e:"前角（躯体+内脏运动）；后角（中间神经元）；侧角（内脏运动神经元）。",t:"知识"},
+{q:"胚胎第4周末，神经管头段形成的三个原始脑泡依次是？",o:["端脑泡、间脑泡、中脑泡","前脑泡、中脑泡、菱脑泡","端脑泡、中脑泡、菱脑泡","前脑泡、中脑泡、后脑泡"],a:1,e:"三个原始脑泡：前脑泡、中脑泡、菱脑泡。是脑的原基。",t:"知识"},
+{q:"前脑泡（prosencephalon）进一步分化为？",o:["端脑和中脑","端脑和间脑","间脑和后脑","中脑和后脑"],a:1,e:"前脑泡头端→端脑；尾端→间脑。",t:"知识"},
+{q:"菱脑泡（rhombencephalon）进一步分化为？",o:["端脑和间脑","中脑和后脑","后脑和末脑","后脑和间脑"],a:2,e:"菱脑泡头侧→后脑（脑桥、小脑）；尾侧→末脑（延髓）。",t:"知识"},
+{q:"中脑泡的腔演变为？",o:["侧脑室","第三脑室","中脑水管","第四脑室"],a:2,e:"前脑泡腔→侧脑室+第三脑室；中脑泡腔→中脑水管；菱脑泡腔→第四脑室。",t:"知识"},
+{q:"脑曲形成的顺序和方向分别是？",o:["先形成凸向腹侧的颈曲和端脑曲，后形成凸向背侧的头曲和脑桥曲","先形成凸向背侧的颈曲和头曲，后形成凸向腹侧的脑桥曲和端脑曲","先形成凸向背侧的脑桥曲和端脑曲，后形成凸向腹侧的颈曲和头曲","四个脑曲同时形成，无先后顺序"],a:1,e:"先形成凸向背侧的颈曲和头曲，后形成凸向腹侧的脑桥曲和端脑曲。",t:"知识"},
+{q:"在脑壁的演变中，端脑和间脑侧壁与脊髓的关键区别是？",o:["端脑和间脑的基板发达，翼板很小","端脑和间脑的侧壁大部分为翼板，基板很小","端脑和间脑不分化出基板和翼板","端脑和间脑的基板和翼板大小相当"],a:1,e:"端脑和间脑侧壁大部分为翼板（感觉相关），基板很小。",t:"知识"},
+{q:"端脑套层的大部分细胞迁移至外表面后形成什么结构？",o:["小脑皮质","大脑皮质","脑干神经核团","脊髓灰质"],a:1,e:"端脑套层大部分→大脑皮质；小部分→神经核团（纹状体→尾状核+豆状核）。",t:"知识"},
+{q:"中脑、后脑和末脑套层细胞的主要发育方向是？",o:["迁移至外表面形成皮质","聚集成神经核团","分裂后全部凋亡","形成室管膜层"],a:1,e:"与端脑不同，中脑/后脑/末脑套层细胞多数聚集成神经核团。",t:"知识"},
+{q:"大脑皮质的发生经历了哪三个进化阶段？",o:["新皮质→旧皮质→原皮质","旧皮质→新皮质→原皮质","原（古）皮质→旧皮质→新皮质","原皮质→新皮质→旧皮质"],a:2,e:"原（古）皮质→旧皮质→新皮质。原/旧皮质分层不明显（3层）。",t:"知识"},
+{q:"胎儿出生时，新皮质已形成的典型分层结构包含几层？",o:["3层","4层","6层","8层"],a:2,e:"新皮质出生时已形成6层（Layer I~VI）。",t:"知识"},
+{q:"原皮质和旧皮质的特征是？",o:["成神经细胞分批迁移，形成6层结构","成神经细胞聚集而成，分层不明显，有的物种分为3层","仅有分子层和颗粒层两层结构","细胞排列呈柱状，无层次之分"],a:1,e:"原/旧皮质分层不明显（3层），新皮质才有清晰6层。",t:"知识"},
+{q:"关于大脑皮质6层结构中第I层的描述，正确的是？",o:["第I层是内颗粒层，含大量颗粒细胞","第I层是分子层，细胞稀少，主要由神经纤维构成","第I层是多形层，含梭形细胞","第I层是外锥体层，含大型锥体细胞"],a:1,e:"第I层是分子层，细胞稀少，主要由神经纤维构成。",t:"知识"},
+{q:"小脑的胚胎起源部位是？",o:["前脑翼板的腹侧部","中脑翼板的背侧部","后脑翼板背侧部的菱唇","末脑基板的腹侧部"],a:2,e:"小脑起源于后脑翼板背侧部的菱唇（rhombic lip）。",t:"知识"},
+{q:"小脑皮质中，浦肯野细胞的独特地位是？",o:["浦肯野细胞是小脑皮质唯一的传入神经元","浦肯野细胞是小脑皮质唯一的输出神经元","浦肯野细胞负责髓鞘的形成","浦肯野细胞是小脑皮质中数量最多的细胞"],a:1,e:"浦肯野细胞是小脑皮质唯一的输出神经元，梨形大细胞。",t:"知识"},
+{q:"小脑皮质的分层（从外到内）依次是？",o:["颗粒层→浦肯野细胞层→分子层","分子层→颗粒层→浦肯野细胞层","分子层→浦肯野细胞层→颗粒层","浦肯野细胞层→分子层→颗粒层"],a:2,e:"从外到内：分子层→浦肯野细胞层→颗粒层。",t:"知识"},
+{q:"小脑皮质组织发生中，浦肯野细胞来源于？",o:["外颗粒层","套层","边缘层","神经上皮细胞层"],a:1,e:"套层→浦肯野细胞+颗粒细胞；外颗粒层→篮状/星形细胞；神经上皮→白质。",t:"知识"},
+{q:"与前庭功能相关的小脑分区是？",o:["新小脑（外侧部分）","旧小脑（内侧和中间区）","原小脑（绒球小叶）","小脑蚓"],a:2,e:"原小脑（绒球小叶）与前庭功能相关。",t:"知识"},
+{q:"感觉神经节的来源是？",o:["神经管壁的套层细胞","神经管周围的间充质","神经嵴细胞","表面外胚层细胞"],a:2,e:"感觉神经节来源于神经嵴细胞。",t:"知识"},
+{q:"周围神经纤维的髓鞘形成细胞是？",o:["少突胶质细胞","施万细胞","星形胶质细胞","小胶质细胞"],a:1,e:"周围神经髓鞘由施万细胞形成（来源于神经嵴）；少突胶质细胞负责CNS。",t:"知识"},
+{q:"关于副交感神经节的来源，目前的认识是？",o:["来源于胸段神经嵴细胞","来源于神经管，而非神经嵴","来源于表面外胚层","来源于中胚层间充质"],a:1,e:"副交感神经节一般认为来源于神经管（非神经嵴）。",t:"知识"},
+{q:"躯体运动神经纤维的来源是？",o:["脊髓后角运动神经元的轴突","脊髓前角运动神经元的轴突","脊髓侧角神经元的轴突","脑干内脏运动核中神经元的轴突"],a:1,e:"躯体运动纤维来自前角运动神经元轴突。",t:"知识"},
+{q:"无脑畸形（anencephaly）的发生原因是？",o:["后神经孔未闭合","前神经孔未闭合","中脑水管狭窄","室间孔闭锁"],a:1,e:"无脑畸形由前神经孔未闭合导致。",t:"知识"},
+{q:"脊柱裂（spina bifida）的发生原因是？",o:["前神经孔未闭合","后神经孔未闭合","神经嵴细胞迁移异常","脑室系统发育障碍"],a:1,e:"脊柱裂由后神经孔未闭合导致。",t:"知识"},
+{q:"脊柱裂中最轻的类型是？",o:["脊膜脊髓膨出","脊膜膨出","隐性脊柱裂","脊髓裂"],a:2,e:"隐性脊柱裂最轻，仅椎弓未愈合。",t:"知识"},
+{q:"脑积水最常见的梗阻部位是？",o:["侧脑室","中脑导水管和室间孔","第四脑室正中孔","蛛网膜颗粒"],a:1,e:"最常见于中脑导水管和室间孔狭窄或闭锁。",t:"知识"},
+{q:"一新生儿腰背部囊性膨出物含脑脊液但不含脊髓组织，最可能的诊断是？",o:["隐性脊柱裂","脊膜膨出","脊膜脊髓膨出","脊髓裂"],a:1,e:"脊膜膨出含脑脊液但不含脊髓。",t:"病例"},
+{q:"【病例】孕妇超声发现胎儿脑室扩张，中脑水管狭窄。最可能的诊断是？",o:["无脑畸形","脑积水","脊柱裂","小脑发育不全"],a:1,e:"中脑水管狭窄→脑积水。",t:"病例"},
+{q:"【病例】患儿腰骶部皮肤异常色素沉着，无膨出物，CT示椎弓缺损。最可能的诊断是？",o:["脊膜膨出","脊膜脊髓膨出","隐性脊柱裂","脊髓裂"],a:2,e:"隐性脊柱裂：仅椎弓未愈合，表面不显。",t:"病例"},
+{q:"【病例】基因敲除小鼠前神经孔第25天未闭合，脑组织暴露。最可能的畸形是？",o:["脊膜脊髓膨出","无脑畸形","脑积水","小脑发育不全"],a:1,e:"前神经孔未闭→无脑畸形。",t:"病例"},
+{q:"【病例】成人腰椎穿刺应选择在哪两个椎体之间？",o:["T12与L1","L1与L2","L3与L4","L5与S1"],a:2,e:"成人脊髓下端L1，穿刺选L3-L4或L4-L5。",t:"病例"},
+{q:"【病例】新生儿MRI显示脊髓直接暴露于体表，无皮肤覆盖。最可能的诊断是？",o:["隐性脊柱裂","脊膜膨出","脊膜脊髓膨出","脊髓裂"],a:3,e:"脊髓裂：脊髓直接暴露，无皮肤覆盖，最严重。",t:"病例"},
+{q:"【病例】6月龄患儿头围进行性增大，前囟饱满，颅缝增宽。最可能的诊断是？",o:["无脑畸形","脑膜脑膨出","脑积水","小头畸形"],a:2,e:"头围增大+前囟饱满+颅缝增宽=脑积水。",t:"病例"},
+{q:"【病例】胚胎第20天前神经孔未闭合，最可能影响的脑结构来源于？",o:["末脑","后脑","中脑","端脑和间脑"],a:3,e:"前神经孔位于头端，影响端脑和间脑。",t:"病例"},
+{q:"【病例】胎儿后神经孔未闭合，脊髓部分暴露但皮肤完整。属于？",o:["隐性脊柱裂","脊膜膨出","脊膜脊髓膨出","脊髓裂"],a:2,e:"脊髓暴露+皮肤完整=脊膜脊髓膨出。",t:"病例"},
+{q:"关于神经管闭合的生物学意义，以下哪项最全面？",o:["仅影响CNS形态发生","不成功只会导致脑积水","是CNS原基形成关键步骤，失败可导致无脑畸形或脊柱裂，常伴颅骨脊柱异常","只发生在头端，尾端自然愈合"],a:2,e:"前孔未闭→无脑畸形；后孔未闭→脊柱裂。常伴颅骨脊柱异常。",t:"知识"}
+];
+var ans=JSON.parse(localStorage.getItem('na')||'{}');
+var cur=0,fl='all';
+
+function render(){
+var c=document.getElementById('qc'),g=document.getElementById('dg');
+c.innerHTML='';g.innerHTML='';
+var co=0,wr=0,an=0;
+for(var i=0;i<Q.length;i++){var a=ans[i];if(a!==undefined){an++;if(a===Q[i].a)co++;else wr++;}}
+document.getElementById('sC').innerHTML='&#10003; '+co;
+document.getElementById('sW').innerHTML='&#10007; '+wr;
+document.getElementById('sA').textContent=an>0?'正确率 '+Math.round(co/an*100)+'%':'正确率 --';
+document.getElementById('sN').textContent='已答 '+an+'/'+Q.length;
+document.getElementById('pb').style.width=(an/Q.length*100)+'%';
+for(var i=0;i<Q.length;i++){
+var a=ans[i],show=fl==='all';
+if(fl==='un')show=a===undefined;
+if(fl==='wr')show=a!==undefined&&a!==Q[i].a;
+if(fl==='ri')show=a!==undefined&&a===Q[i].a;
+var d=document.createElement('div');
+d.className='dt';d.textContent=i+1;
+if(a!==undefined)d.className+=a===Q[i].a?' ok':' ng';
+if(a===undefined)d.className+=' sk';
+d.setAttribute('data-i',i);
+d.onclick=function(){go(parseInt(this.getAttribute('data-i')));};
+g.appendChild(d);
+if(!show)continue;
+var card=document.createElement('div');
+card.className='qc';card.id='q'+i;
+if(a!==undefined)card.className+=a===Q[i].a?' ok':' ng';
+var tc=Q[i].t==='病例'?'tg cl':'tg';
+var h='<div class="qn">第 '+(i+1)+' 题 / '+Q.length+' <span class="'+tc+'">'+Q[i].t+'</span></div>';
+h+='<div class="qt">'+Q[i].q+'</div><div class="opts">';
+var lt=['A','B','C','D'];
+for(var j=0;j<4;j++){
+var oc='';
+if(a!==undefined){oc='dis';if(j===Q[i].a)oc+=' ok';if(j===a&&a!==Q[i].a)oc+=' ng';}
+h+='<div class="op '+oc+'" data-q="'+i+'" data-o="'+j+'"><div class="lt">'+lt[j]+'</div><div class="tx">'+Q[i].o[j]+'</div></div>';
+}
+h+='</div><div class="ex '+(a!==undefined?'show':'')+'" id="ex'+i+'"><b>解析：</b>'+Q[i].e+'</div>';
+card.innerHTML=h;
+c.appendChild(card);
+}
+var ops=c.querySelectorAll('.op');
+for(var k=0;k<ops.length;k++){
+ops[k].onclick=function(){
+var qi=parseInt(this.getAttribute('data-q'));
+var oi=parseInt(this.getAttribute('data-o'));
+sel(qi,oi);
+};
+}
+}
+
+function sel(qi,oi){
+if(ans[qi]!==undefined)return;
+ans[qi]=oi;
+localStorage.setItem('na',JSON.stringify(ans));
+render();
+if(oi===Q[qi].a){
+setTimeout(function(){
+for(var j=qi+1;j<Q.length;j++){if(ans[j]===undefined){go(j);return;}}
+for(var j=0;j<qi;j++){if(ans[j]===undefined){go(j);return;}}
+},500);
+}
+}
+
+function go(i){
+if(i<0||i>=Q.length)return;
+cur=i;
+var el=document.getElementById('q'+i);
+if(el){var y=el.getBoundingClientRect().top+window.pageYOffset-210;window.scrollTo({top:y,behavior:'smooth'});}
+var cards=document.querySelectorAll('.qc');
+for(var k=0;k<cards.length;k++)cards[k].classList.remove('act');
+if(el)el.classList.add('act');
+// Scroll dot grid to show current dot
+var dots=document.querySelectorAll('.dt');
+if(dots[i]){
+var dg=document.getElementById('dg');
+var dotRect=dots[i].getBoundingClientRect();
+var dgRect=dg.getBoundingClientRect();
+if(dotRect.left<dgRect.left||dotRect.right>dgRect.right){
+dots[i].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+}
+}
+}
+
+document.getElementById('fb').onclick=function(e){
+var btn=e.target;if(btn.tagName!=='BUTTON')return;
+var f=btn.getAttribute('data-f');
+fl=f==='un'?'un':f==='wr'?'wr':f==='ri'?'ri':'all';
+var btns=document.querySelectorAll('.fb button');
+for(var k=0;k<btns.length;k++)btns[k].classList.remove('on');
+btn.classList.add('on');
+render();
+};
+
+function showRes(){
+var co=0,wr=0,un=0,wl=[];
+for(var i=0;i<Q.length;i++){var a=ans[i];if(a===undefined)un++;else if(a===Q[i].a)co++;else{wr++;wl.push(i);}}
+var pct=Math.round(co/Q.length*100);
+var gr=pct>=90?'优秀!':pct>=70?'良好':pct>=60?'及格':'需要加油';
+var gc=pct>=70?'good':'bad';
+var wh='';
+if(wl.length>0){
+wh='<div class="wl"><b>错题回顾：</b>';
+for(var k=0;k<wl.length;k++){
+var j=wl[k];
+wh+='<div class="wi"><b>第'+(j+1)+'题</b>：'+Q[j].q+'<br><span style="color:#f44336">你的答案：'+'ABCD'[ans[j]]+'</span> | <span style="color:#4caf50">正确答案：'+'ABCD'[Q[j].a]+'</span></div>';
+}
+wh+='</div>';
+}
+var h='<h2>测验结果</h2><div class="sb '+gc+'">'+pct+'%</div><p>'+gr+'</p>';
+h+='<div class="dg2"><div class="di"><div class="dn" style="color:#4caf50">'+co+'</div><div class="dl">正确</div></div>';
+h+='<div class="di"><div class="dn" style="color:#f44336">'+wr+'</div><div class="dl">错误</div></div>';
+h+='<div class="di"><div class="dn" style="color:#ff9800">'+un+'</div><div class="dl">未答</div></div></div>';
+h+='<p>共 '+Q.length+' 题，已答 '+(Q.length-un)+' 题</p>'+wh;
+h+='<div style="margin-top:14px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">';
+h+='<button class="bp" onclick="closeM()" style="padding:10px 24px;border:none;border-radius:8px;cursor:pointer;font-size:14px">关闭</button>';
+if(wr>0)h+='<button class="bd" onclick="revW()" style="padding:10px 24px;border:none;border-radius:8px;cursor:pointer;font-size:14px;color:#fff">复习错题</button>';
+h+='</div>';
+document.getElementById('mom').innerHTML=h;
+document.getElementById('mov').classList.add('show');
+}
+
+function closeM(){document.getElementById('mov').classList.remove('show');}
+function revW(){
+closeM();fl='wr';
+var btns=document.querySelectorAll('.fb button');
+for(var k=0;k<btns.length;k++)btns[k].classList.remove('on');
+btns[2].classList.add('on');
+render();go(0);
+}
+function resetAll(){
+if(!confirm('确定要清除所有答题记录吗？'))return;
+ans={};localStorage.removeItem('na');cur=0;fl='all';
+var btns=document.querySelectorAll('.fb button');
+for(var k=0;k<btns.length;k++)btns[k].classList.remove('on');
+btns[0].classList.add('on');
+render();window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Scroll to top button
+window.onscroll=function(){
+var b=document.getElementById('stt');
+if(window.scrollY>400)b.classList.add('show');
+else b.classList.remove('show');
+};
+
+render();
+</script>
+</body>
+</html>
